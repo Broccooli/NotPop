@@ -23,11 +23,7 @@ namespace NOTPOPPROTOTYPE
         float maxFallSpeed = 20f;
         float fallSpeed = 0f;
 
-        float jumpSpeed = 10f;
-        float jumpInterval = 1f;
-
         bool grounded = false;
-        bool jumping = false;
 
         Texture2D t;
         KeyboardState keyboardState;
@@ -169,14 +165,14 @@ namespace NOTPOPPROTOTYPE
 
         public bool isColliding(params StaticStructure[] ssa)
         {
-            // Rectangle check = new Rectangle((int)position.X, (int)position.Y, t.Width, t.Height + 10);
+            Rectangle check = new Rectangle((int)position.X, (int)position.Y, t.Width, t.Height + 10);
 
             foreach (StaticStructure ss in ssa)
             {
                 if (ss.IsGround)
                 {
                     //if (check.Intersects(ss.Bounds) && !grounded)
-                    if(((Ground)ss).hasPlayer())
+                    if (((Ground)ss).hasPlayer(check))
                     {
                         grounded = true;
                         fallSpeed = 0f;

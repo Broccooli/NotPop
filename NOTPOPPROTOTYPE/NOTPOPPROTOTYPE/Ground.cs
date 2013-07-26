@@ -22,10 +22,10 @@ namespace NOTPOPPROTOTYPE
                                         t.Height);
         }
 
-        public bool hasPlayer()
+        public bool hasPlayer(Rectangle check)
         {          
 
-            if (PlayerS.Instance.Bounds.Intersects(bounds) && PlayerS.Instance.Bounds.Bottom < bounds.Bottom)
+            if (check.Intersects(bounds) && PlayerS.Instance.Bounds.Bottom < position.Y)
             {
                 return true;
             }

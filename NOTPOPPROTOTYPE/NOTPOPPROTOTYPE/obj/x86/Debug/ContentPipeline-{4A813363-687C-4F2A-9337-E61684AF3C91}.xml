@@ -7,7 +7,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>J:\C#\NOTPOPPROTOTYPE\NOTPOPPROTOTYPE\NOTPOPPROTOTYPE\bin\x86\Debug\Content\hero.xnb</Output>
+      <Output>J:\C#\NOTPOP\NOTPOPPROTOTYPE\NOTPOPPROTOTYPE\bin\x86\Debug\Content\hero.xnb</Output>
       <Time>2013-07-23T10:58:30-04:00</Time>
     </Item>
     <Item>
@@ -16,7 +16,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>J:\C#\NOTPOPPROTOTYPE\NOTPOPPROTOTYPE\NOTPOPPROTOTYPE\bin\x86\Debug\Content\wall.xnb</Output>
+      <Output>J:\C#\NOTPOP\NOTPOPPROTOTYPE\NOTPOPPROTOTYPE\bin\x86\Debug\Content\wall.xnb</Output>
       <Time>2013-07-25T09:57:34-04:00</Time>
     </Item>
     <Item>
@@ -25,7 +25,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>J:\C#\NOTPOPPROTOTYPE\NOTPOPPROTOTYPE\NOTPOPPROTOTYPE\bin\x86\Debug\Content\ground.xnb</Output>
+      <Output>J:\C#\NOTPOP\NOTPOPPROTOTYPE\NOTPOPPROTOTYPE\bin\x86\Debug\Content\ground.xnb</Output>
       <Time>2013-07-25T10:52:08-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
@@ -35,10 +35,10 @@
       <TargetProfile>Reach</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>J:\C#\NOTPOPPROTOTYPE\NOTPOPPROTOTYPE\NOTPOPPROTOTYPEContent\</RootDirectory>
-      <LoggerRootDirectory>J:\C#\NOTPOPPROTOTYPE\NOTPOPPROTOTYPE\NOTPOPPROTOTYPE\</LoggerRootDirectory>
-      <IntermediateDirectory>J:\C#\NOTPOPPROTOTYPE\NOTPOPPROTOTYPE\NOTPOPPROTOTYPE\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>J:\C#\NOTPOPPROTOTYPE\NOTPOPPROTOTYPE\NOTPOPPROTOTYPE\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>J:\C#\NOTPOP\NOTPOPPROTOTYPE\NOTPOPPROTOTYPEContent\</RootDirectory>
+      <LoggerRootDirectory>J:\C#\NOTPOP\NOTPOPPROTOTYPE\NOTPOPPROTOTYPE\</LoggerRootDirectory>
+      <IntermediateDirectory>J:\C#\NOTPOP\NOTPOPPROTOTYPE\NOTPOPPROTOTYPE\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>J:\C#\NOTPOP\NOTPOPPROTOTYPE\NOTPOPPROTOTYPE\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
