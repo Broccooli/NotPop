@@ -75,11 +75,11 @@ namespace NOTPOPPROTOTYPE
 
             keyboardState = Keyboard.GetState();
 
-            if (jumping)
-            {
-                motion.Y = -1;
-                jumpSpeed -= 1;
-            }
+            //if (jumping)
+            //{
+            //    motion.Y = -1;
+            //    jumpSpeed -= 1;
+            //}
 
             
             if (keyboardState.IsKeyDown(Keys.A))
@@ -92,17 +92,16 @@ namespace NOTPOPPROTOTYPE
                 motion.X = 1;
             }
 
-            if (keyboardState.IsKeyDown(Keys.Space))
-            {
-                jumping = true;
-            }
+            //if (keyboardState.IsKeyDown(Keys.Space))
+            //{
+            //    jumping = true;
+            //}
 
             motion.X *= speed;
-            motion.Y *= jumpSpeed;
 
             if (!grounded)
             {
-                fall();
+                fall(); // Sets motion.Y so that the player falls
             }
 
             position += motion;
@@ -170,13 +169,14 @@ namespace NOTPOPPROTOTYPE
 
         public bool isColliding(params StaticStructure[] ssa)
         {
-            Rectangle check = new Rectangle((int)position.X, (int)position.Y, t.Width, t.Height + 10);
+            // Rectangle check = new Rectangle((int)position.X, (int)position.Y, t.Width, t.Height + 10);
 
             foreach (StaticStructure ss in ssa)
             {
                 if (ss.IsGround)
                 {
-                    if (check.Intersects(ss.Bounds) && !grounded)
+                    //if (check.Intersects(ss.Bounds) && !grounded)
+                    if(((Ground)ss).hasPlayer())
                     {
                         grounded = true;
                         fallSpeed = 0f;

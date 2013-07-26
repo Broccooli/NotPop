@@ -22,5 +22,16 @@ namespace NOTPOPPROTOTYPE
                                         t.Height);
         }
 
+        public bool hasPlayer()
+        {          
+
+            if (PlayerS.Instance.Bounds.Intersects(bounds) && PlayerS.Instance.Bounds.Bottom < bounds.Bottom)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
     }
 }
