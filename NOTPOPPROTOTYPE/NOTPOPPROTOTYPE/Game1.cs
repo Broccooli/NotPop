@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -19,10 +21,17 @@ namespace NOTPOPPROTOTYPE
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         const int NUM_STRUCTS = 3;
+        const int NUM_LVLS = 5;
+        const int MAX_STRUCTS_PER_LEVEL = 100;
+        int currLevel = 1;
 
         PlayerS player;
         Rectangle screenRectangle;
+
+        // TO BE DELETED!!
         StaticStructure[] structures = new StaticStructure[NUM_STRUCTS];
+
+        Level[] Levels = new Level[NUM_LVLS];
 
         public Game1()
         {
@@ -62,16 +71,18 @@ namespace NOTPOPPROTOTYPE
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             player = PlayerS.Init(this.Content, screenRectangle);
-            
+
+            loadLevels();
+
             //Walls
-            Texture2D t = Content.Load<Texture2D>("wall");
-            structures[0] = new Wall(t, new Vector2( 250, 150));
+            //Texture2D t = Content.Load<Texture2D>("vWall");
+            //structures[0] = new vWall(t, new Vector2( 250, 150));
 
-            structures[1] = new Wall(t, new Vector2( 475, 150));
+            //structures[1] = new vWall(t, new Vector2( 475, 150));
 
-            t = Content.Load<Texture2D>("ground");
+            //t = Content.Load<Texture2D>("hWall");
 
-            structures[2] = new Ground(t, new Vector2( 275, 500));
+            //structures[2] = new hWall(t, new Vector2( 275, 500));
             
             // TODO: use this.Content to load your game content here
         }
@@ -98,7 +109,7 @@ namespace NOTPOPPROTOTYPE
 
             // TODO: Add your update logic here
 
-            player.Update(structures);
+            player.Update(Levels[currLevel - 1].Stuff);
 
             base.Update(gameTime);
         }
@@ -116,13 +127,79 @@ namespace NOTPOPPROTOTYPE
             spriteBatch.Begin();
 
             player.Draw(spriteBatch);
-
-            foreach (StaticStructure s in structures)
-                s.Draw(spriteBatch);
+            Levels[0].Draw(spriteBatch);
+            //foreach (StaticStructure s in structures)
+            //    s.Draw(spriteBatch);
 
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private void loadLevels()
+        {
+            String line, type;
+            short lvl;
+            string[] structs;
+            StaticStructure[] ssa;
+            Texture2D t;
+            int ii;
+
+            StreamReader sr = new StreamReader("J:/GAEMS/lvls.txt");
+            line = sr.ReadLine(); // Get the next line in the document
+            do{           
+
+                if( line.Contains('!') ){ // If the line contains '!' then it's the beginning of a new level
+
+                    if (line.Length == 1)
+                    {
+                        break;
+                    }
+
+                    lvl = (short)Char.GetNumericValue(line.ElementAt<char>(1));
+                    ssa = new StaticStructure[MAX_STRUCTS_PER_LEVEL];
+                    ii = 0;
+                    
+
+                    while( sr.Peek() != '!' ){
+                        line = sr.ReadLine();
+                        structs = line.Split(':');                 
+                        type = structs[0];
+                        StaticStructure ss = new StaticStructure();
+
+                        for (int yy = 0; yy < structs.Length; yy++){
+                            if ( yy == 0 ){
+                                t = Content.Load<Texture2D>(type);
+                                
+                                if (type == "hWall"){
+                                    ss = new hWall(t);
+                                }
+                                else if(type == "vWall"){
+                                    ss = new vWall(t);
+                                }
+                                else{
+                                    Console.WriteLine("error in lvls.txt");
+                                }
+                            }
+                            else if ( yy == 1 ){
+                                ss.X = Convert.ToInt32(structs[yy]);
+                            }
+                            else if ( yy == 2 ){
+                                ss.Y = Convert.ToInt32(structs[yy]);
+                            }
+                            else{
+                                Console.WriteLine("More then needed in lvls.txt");
+                            }
+                        }
+
+                        ssa[ii] = ss;
+                        ii++;
+                    }
+
+                    Levels[lvl - 1] = new Level(ssa); 
+                }
+
+            } while ((line = sr.ReadLine()) != null);
         }
     }
 }

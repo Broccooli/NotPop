@@ -22,6 +22,7 @@ namespace NOTPOPPROTOTYPE
         float speed = 6f;
         float maxFallSpeed = 20f;
         float fallSpeed = 0f;
+        float gravity = .5f;
 
         bool grounded = false;
 
@@ -94,11 +95,12 @@ namespace NOTPOPPROTOTYPE
             //}
 
             motion.X *= speed;
+            motion.Y += gravity;
 
-            if (!grounded)
-            {
-                fall(); // Sets motion.Y so that the player falls
-            }
+            //if (!grounded)
+            //{
+            //    fall();
+            //}
 
             position += motion;
 
@@ -110,14 +112,14 @@ namespace NOTPOPPROTOTYPE
 
             if (isColliding(ssa))
             {
-                if (!grounded)
-                {
-                    position.X = oldP.X;
-                }
-                else
-                {
+                //if (!grounded)
+                //{
+                //    position.X = oldP.X;
+                //}
+                //else
+                //{
                     position = oldP;
-                }
+                //}
 
                 bounds = this.Bounds;
             }
@@ -169,20 +171,24 @@ namespace NOTPOPPROTOTYPE
 
             foreach (StaticStructure ss in ssa)
             {
-                if (ss.IsGround)
-                {
+                //if (ss.IsGround)
+                //{
                     //if (check.Intersects(ss.Bounds) && !grounded)
-                    if (((Ground)ss).hasPlayer(check))
-                    {
-                        grounded = true;
-                        fallSpeed = 0f;
-                    }
-                    else
-                    {
-                        grounded = false;
-                    }
+                //    if (((hWall)ss).hasPlayer(check))
+                //    {
+                //        grounded = true;
+                //        fallSpeed = 0f;
+                //    }
+                //    else
+                //    {
+                //        grounded = false;
+                //    }
+                //}
+                if (ss == null)
+                {
+                    break;
                 }
-                
+
                 if (bounds.Intersects(ss.Bounds) && ss.Solid)
                 {
                     return true;

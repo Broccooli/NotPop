@@ -37,15 +37,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="wall.png">
-      <Name>wall</Name>
+    <Compile Include="vWall.png">
+      <Name>vWall</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ground.png">
-      <Name>ground</Name>
+    <Compile Include="hWall.png">
+      <Name>hWall</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

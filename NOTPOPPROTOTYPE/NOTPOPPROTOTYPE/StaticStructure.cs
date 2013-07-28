@@ -11,10 +11,9 @@ namespace NOTPOPPROTOTYPE
     class StaticStructure
     {
         protected Texture2D t;
-        protected Rectangle bounds;
+        protected Rectangle bounds = new Rectangle();
         protected Vector2 position;
         protected bool isSolid; // Player cannot move through it
-        protected bool ground;
 
         public StaticStructure()
         {
@@ -25,6 +24,40 @@ namespace NOTPOPPROTOTYPE
             get
             {
                 return position;
+            }
+        }
+
+        public float X
+        {
+            get
+            {
+                return position.X;
+            }
+            set
+            {
+                position.X = value;
+                bounds.X = (int)value;
+            }
+        }
+
+        public float Y
+        {
+            get
+            {
+                return position.Y;
+            }
+            set
+            {
+                position.Y = value;
+                bounds.Y = (int)value;
+            }
+        }
+
+        public Texture2D Texture
+        {
+            get
+            {
+                return t;
             }
         }
 
@@ -41,14 +74,6 @@ namespace NOTPOPPROTOTYPE
             get
             {
                 return isSolid;
-            }
-        }
-
-        public bool IsGround
-        {
-            get
-            {
-                return ground;
             }
         }
 
