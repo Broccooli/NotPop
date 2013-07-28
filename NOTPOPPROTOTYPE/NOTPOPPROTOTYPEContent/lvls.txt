@@ -1,0 +1,7 @@
+!1
+vWall:100:100
+hWall:150:350
+hWall:400:350
+vWall:650:100
+hWall:400:50
+hWall:150:50
