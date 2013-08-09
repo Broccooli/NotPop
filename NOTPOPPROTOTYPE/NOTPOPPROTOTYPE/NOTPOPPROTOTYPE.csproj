@@ -86,6 +86,7 @@
     <Content Include="GameThumbnail.png">
       <XnaPlatformSpecific>true</XnaPlatformSpecific>
     </Content>
+    <EmbeddedResource Include="lvls.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NOTPOPPROTOTYPEContent\NOTPOPPROTOTYPEContent.contentproj">

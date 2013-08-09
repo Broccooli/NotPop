@@ -28,8 +28,7 @@ namespace NOTPOPPROTOTYPE
         PlayerS player;
         Rectangle screenRectangle;
 
-        // TO BE DELETED!!
-        StaticStructure[] structures = new StaticStructure[NUM_STRUCTS];
+        SpriteFont font;
 
         Level[] Levels = new Level[NUM_LVLS];
 
@@ -71,18 +70,11 @@ namespace NOTPOPPROTOTYPE
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             player = PlayerS.Init(this.Content, screenRectangle);
+            font = Content.Load<SpriteFont>("myFont");
 
             loadLevels();
 
-            //Walls
-            //Texture2D t = Content.Load<Texture2D>("vWall");
-            //structures[0] = new vWall(t, new Vector2( 250, 150));
-
-            //structures[1] = new vWall(t, new Vector2( 475, 150));
-
-            //t = Content.Load<Texture2D>("hWall");
-
-            //structures[2] = new hWall(t, new Vector2( 275, 500));
+            
             
             // TODO: use this.Content to load your game content here
         }
@@ -127,13 +119,21 @@ namespace NOTPOPPROTOTYPE
             spriteBatch.Begin();
 
             player.Draw(spriteBatch);
-            Levels[0].Draw(spriteBatch);
-            //foreach (StaticStructure s in structures)
-            //    s.Draw(spriteBatch);
+            DrawText();
+            Levels[currLevel - 1].Draw(spriteBatch);
+
+
 
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private void DrawText()
+        {
+            spriteBatch.DrawString(font, "Player's Position: (" + (PlayerS.Instance.Position.X) + ", " + (PlayerS.Instance.Position.Y) + ")", new Vector2(10, 10), Color.Black);
+            spriteBatch.DrawString(font, "Player's X Velocity: " + (PlayerS.Instance.Velocity.X), new Vector2(10, 20), Color.Black);
+            spriteBatch.DrawString(font, "Player's Y Velocity: " + (PlayerS.Instance.Velocity.Y), new Vector2(10, 30), Color.Black);
         }
 
         private void loadLevels()
@@ -145,7 +145,9 @@ namespace NOTPOPPROTOTYPE
             Texture2D t;
             int ii;
 
-            StreamReader sr = new StreamReader("J:/GAEMS/lvls.txt");
+            System.Reflection.Assembly a = System.Reflection.Assembly.GetExecutingAssembly();
+            StreamReader sr = new StreamReader(a.GetManifestResourceStream("NOTPOPPROTOTYPE.lvls.txt"));
+
             line = sr.ReadLine(); // Get the next line in the document
             do{           
 

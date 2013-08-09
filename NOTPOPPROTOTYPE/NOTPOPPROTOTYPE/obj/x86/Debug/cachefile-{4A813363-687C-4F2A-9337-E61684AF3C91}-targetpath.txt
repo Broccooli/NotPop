@@ -1,3 +1,4 @@
 Content\hero.xnb
 Content\vWall.xnb
 Content\hWall.xnb
+Content\myFont.xnb

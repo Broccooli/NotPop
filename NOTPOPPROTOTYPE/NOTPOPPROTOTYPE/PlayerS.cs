@@ -16,15 +16,16 @@ namespace NOTPOPPROTOTYPE
         static PlayerS inst;
         Vector2 position;
         Vector2 oldP;
-        Vector2 motion;
+        Vector2 velocity = Vector2.Zero;
+        Vector2 oldV = Vector2.Zero;
         Rectangle bounds;
         Rectangle screen;
-        float speed = 6f;
-        float maxFallSpeed = 20f;
-        float fallSpeed = 0f;
-        float gravity = .5f;
-
-        bool grounded = false;
+        float speed = 1f;
+        float maxSpeed = 10f;
+        float friction = .9f;
+        bool jumping = false;
+        bool grounded;
+        float jumpSpeed = 20f;
 
         Texture2D t;
         KeyboardState keyboardState;
@@ -67,83 +68,105 @@ namespace NOTPOPPROTOTYPE
 
         public void Update(StaticStructure[] ssa)
         {
-            motion = Vector2.Zero;
+            oldV = velocity;
+            velocity = Vector2.Zero;            
             oldP = position;
 
             keyboardState = Keyboard.GetState();
-
-            //if (jumping)
-            //{
-            //    motion.Y = -1;
-            //    jumpSpeed -= 1;
-            //}
-
             
             if (keyboardState.IsKeyDown(Keys.A))
             {
-                motion.X = -1;
+                velocity.X = -1; // Going Left
             }
 
             if (keyboardState.IsKeyDown(Keys.D))
             {
-                motion.X = 1;
+                velocity.X = 1; // Going Right
             }
 
-            //if (keyboardState.IsKeyDown(Keys.Space))
-            //{
-            //    jumping = true;
-            //}
+            if (keyboardState.IsKeyDown(Keys.Space)){
+                velocity.Y = -1; // Move up
+                jumping = true;
+            }            
 
-            motion.X *= speed;
-            motion.Y += gravity;
+            if (jumping){
+                velocity.Y *= jumpSpeed;
+                jumpSpeed -= 1;
+            }
 
-            //if (!grounded)
-            //{
-            //    fall();
-            //}
+            if (velocity.X != 0)
+            {
+                if (speed >= maxSpeed)
+                {
+                    speed = maxSpeed;
+                }
+                else
+                {
+                    speed += .09f;
+                }
 
-            position += motion;
+                velocity.X *= speed;
+            }
+            else
+            {
+                speed *= friction;
+                //velocity.X = speed;
+
+                if (oldV.X < 0)
+                {
+                    velocity.X = -speed;
+                }
+                else if (oldV.X > 0){
+                    velocity.X = speed;
+                }
+            }            
+
+            position += velocity;
 
             bounds = new Rectangle((int)position.X,
                                    (int)position.Y,
                                    t.Width,
                                    t.Height);
 
-
             if (isColliding(ssa))
             {
-                //if (!grounded)
-                //{
-                //    position.X = oldP.X;
-                //}
-                //else
-                //{
-                    position = oldP;
-                //}
-
-                bounds = this.Bounds;
+                if (grounded)
+                {
+                    position.X = oldP.X;
+                    position.Y = oldP.Y + 5;
+                    jumping = false;
+                }
             }
-
         }
 
-        private void fall()
-        {
-            fallSpeed += 0.5f;
-            motion.Y = 1; 
 
-            if (fallSpeed >= maxFallSpeed)
-            {
-                fallSpeed = maxFallSpeed;
-            }
-
-            motion.Y *= fallSpeed;
-
-        }
 
         public void setInStartPosition()
         {
-            position.X = (screen.Width - t.Width) / 2 ;
-            position.Y = (screen.Height - t.Height) / 4;
+            position.X = (screen.Width - t.Width) / 2 + 150;
+            position.Y = (screen.Height - t.Height) / 4 + 150;
+        }
+
+        public bool isColliding(StaticStructure[] ssa)
+        {
+            foreach (StaticStructure ss in ssa)
+            {
+                if (ss == null)
+                {
+                    break;
+                }
+                if (bounds.Intersects(ss.Bounds))
+                {
+                    if (velocity.Y >= 0 && bounds.Bottom <= ss.Bounds.Top) // Player is falling
+                    {
+                        grounded = true;
+                    }
+
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public Rectangle Bounds
@@ -165,38 +188,12 @@ namespace NOTPOPPROTOTYPE
 
         }
 
-        public bool isColliding(params StaticStructure[] ssa)
+        public Vector2 Velocity
         {
-            Rectangle check = new Rectangle((int)position.X, (int)position.Y, t.Width, t.Height + 10);
-
-            foreach (StaticStructure ss in ssa)
+            get
             {
-                //if (ss.IsGround)
-                //{
-                    //if (check.Intersects(ss.Bounds) && !grounded)
-                //    if (((hWall)ss).hasPlayer(check))
-                //    {
-                //        grounded = true;
-                //        fallSpeed = 0f;
-                //    }
-                //    else
-                //    {
-                //        grounded = false;
-                //    }
-                //}
-                if (ss == null)
-                {
-                    break;
-                }
-
-                if (bounds.Intersects(ss.Bounds) && ss.Solid)
-                {
-                    return true;
-                }
+                return velocity;
             }
-
-            
-            return false;
         }
 
 

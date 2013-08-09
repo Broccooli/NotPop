@@ -28,6 +28,15 @@
       <Output>J:\C#\NOTPOP\NOTPOPPROTOTYPE\NOTPOPPROTOTYPE\bin\x86\Debug\Content\hWall.xnb</Output>
       <Time>2013-07-27T17:02:56-04:00</Time>
     </Item>
+    <Item>
+      <Source>myFont.spritefont</Source>
+      <Name>myFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>J:\C#\NOTPOP\NOTPOPPROTOTYPE\NOTPOPPROTOTYPE\bin\x86\Debug\Content\myFont.xnb</Output>
+      <Time>2013-08-09T15:44:46-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{4A813363-687C-4F2A-9337-E61684AF3C91}</ContentProjectGUID>
