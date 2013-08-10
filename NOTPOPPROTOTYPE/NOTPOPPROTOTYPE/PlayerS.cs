@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +22,7 @@ namespace NOTPOPPROTOTYPE
         Rectangle screen;
         float speed = 1f;
         float maxSpeed = 10f;
-        float friction = .9f;
+        float friction = .93f;
         bool jumping = false;
         bool grounded;
         float jumpSpeed = 20f;
@@ -84,17 +84,25 @@ namespace NOTPOPPROTOTYPE
                 velocity.X = 1; // Going Right
             }
 
-            if (keyboardState.IsKeyDown(Keys.Space)){
+            if (keyboardState.IsKeyDown(Keys.Space) || jumping){
                 velocity.Y = -1; // Move up
-                jumping = true;
-            }            
 
-            if (jumping){
+                if (!jumping)
+                    jumping = true;
+            }
+
+            if (jumping)
+            {
                 velocity.Y *= jumpSpeed;
                 jumpSpeed -= 1;
             }
+            else
+            {
+                velocity.Y = 0;
+                jumpSpeed = 20f;
+            }
 
-            if (velocity.X != 0)
+            if (velocity.X != 0) // Player is moving (i.e. Has W or A held down)
             {
                 if (speed >= maxSpeed)
                 {
@@ -102,7 +110,7 @@ namespace NOTPOPPROTOTYPE
                 }
                 else
                 {
-                    speed += .09f;
+                    speed += .3f;
                 }
 
                 velocity.X *= speed;
@@ -110,8 +118,14 @@ namespace NOTPOPPROTOTYPE
             else
             {
                 speed *= friction;
-                //velocity.X = speed;
 
+                // Apply friction in the correct direction
+                // i.e. Going left, slow down while going left
+                //
+                // Without this, the player would always start moving right
+                // when friction was applied, because friction is always a positive number
+                //
+                // This code simply checks the direction the player was moving in prior to stopping movement
                 if (oldV.X < 0)
                 {
                     velocity.X = -speed;
@@ -130,12 +144,9 @@ namespace NOTPOPPROTOTYPE
 
             if (isColliding(ssa))
             {
-                if (grounded)
-                {
-                    position.X = oldP.X;
-                    position.Y = oldP.Y + 5;
-                    jumping = false;
-                }
+                position = oldP;
+                bounds = this.Bounds;
+                velocity.X = 0;
             }
         }
 
@@ -157,11 +168,14 @@ namespace NOTPOPPROTOTYPE
                 }
                 if (bounds.Intersects(ss.Bounds))
                 {
-                    if (velocity.Y >= 0 && bounds.Bottom <= ss.Bounds.Top) // Player is falling
+                    if (velocity.Y < 0) // Player is moving up
                     {
+                        velocity.Y = 0; // Stop the player from moving up
+                    }
+                    else if (velocity.Y > 0 && bounds.Bottom > ss.Bounds.Top){ // Moving down
+                        jumping = false;
                         grounded = true;
                     }
-
                     return true;
                 }
             }

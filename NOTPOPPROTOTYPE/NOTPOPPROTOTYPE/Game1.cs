@@ -134,6 +134,8 @@ namespace NOTPOPPROTOTYPE
             spriteBatch.DrawString(font, "Player's Position: (" + (PlayerS.Instance.Position.X) + ", " + (PlayerS.Instance.Position.Y) + ")", new Vector2(10, 10), Color.Black);
             spriteBatch.DrawString(font, "Player's X Velocity: " + (PlayerS.Instance.Velocity.X), new Vector2(10, 20), Color.Black);
             spriteBatch.DrawString(font, "Player's Y Velocity: " + (PlayerS.Instance.Velocity.Y), new Vector2(10, 30), Color.Black);
+            spriteBatch.DrawString(font, "Player's Bound Box: ", new Vector2(250, 10), Color.Black);
+            spriteBatch.DrawString(font, "Top: " + PlayerS.Instance.Bounds.Top, new Vector2(300, 20), Color.Black);
         }
 
         private void loadLevels()
